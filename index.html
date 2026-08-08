@@ -30,6 +30,31 @@
   a { color: var(--amber); }
   .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
 
+  .lang-switch {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    gap: 4px;
+    background: var(--card);
+    border: 1px solid #262a33;
+    border-radius: 8px;
+    padding: 3px;
+    z-index: 10;
+  }
+  .lang-switch button {
+    background: transparent;
+    border: none;
+    color: var(--ink-dim);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .lang-switch button.active { background: var(--amber); color: #191c22; }
+
   header.hero {
     padding: 72px 0 56px;
     text-align: center;
@@ -131,11 +156,15 @@
   .privacy { text-align: center; max-width: 640px; margin: 0 auto; }
   .privacy p { color: var(--ink-dim); font-size: 15px; }
 
-  footer { padding: 40px 0; text-align: center; color: var(--ink-dim); font-size: 13px; }
-  footer a { color: var(--ink-dim); text-decoration: underline; }
+  footer { padding: 40px 0; text-align: center; color: var(--ink-dim); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
 </style>
 </head>
 <body>
+
+  <div class="lang-switch">
+    <button type="button" id="lang-es" data-lang="es">ES</button>
+    <button type="button" id="lang-en" data-lang="en">EN</button>
+  </div>
 
   <header class="hero">
     <div class="wrap">
@@ -143,46 +172,42 @@
         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAFa0lEQVR4nO2dy00kMRCGa1YbxCA4kQEBEAqBEAGBbCgEQAZzGjRkMXtAlkzT0227Hq6y/0/awz602K7P5Wd3EwEAAAAAAAAAAGAWDr0LYMHdw+N17c8/3u5//P7p9fPXv7mcT0O30d/eBZDmVrAl/7+RpAgvgHTAW35mZCFCCtAj6Fvk5YkmQygBvAV+jVTGKCK4FyBC0NeIkhX+9C7ALe4eHq9Rg78k1eXr37O7+rgUwGNDcUlLzq9/z9f0q3ORiMjRELBskI+3+9V1+SgcX95dDAsuMsDdw+N15GAvN5yI/Axx3QXYaoS1hhuBXPbeEnQVYFn5EbNAicQ9JegiQE36Gy0L3JK815BgLsBeJUfKAi3yWktgKkBr5SJmgbUyl8ptKYGZADWVWmuoiBLk1GY2KwlMBGipTOShQEpWCwnUNyM4leCk0Z6UXDSpQfMsQTUDcA2OEOwlGkOVZiZQE0Cr0NHmAlISa7WnigCShY2UBbTl1JBAfGzRKGTEuYDmYZbknCCEAETjnw7W4FaA3gcbMyElgdgcAMG3Raq9RQRA8PsgcauILYCXq00z8fF2/+OKGef/Yo0jyx+OSZo+aysizvUyUQGIIIEWe3sMrRI0C7CXeiCCHFvBT+3cuipoFiBN/EoKB9rY6/XL9m2RgC0AUX1BwT4tHctMgNLn7XMgQRnczlQrgagARMgGHCQ6UHcBEsgG5Uh2GnUBanb9kA3KkTzxrJFA9UbQ0+vnzUog+NtYtU+VAK17/q2ViXb7h0Nqo61OU0pNnKqGAIlDn9JzfemLlbNROgyYPxmEbOCL4gxgeeSLyaMMJVnAnQA1PR0ibFMiQPf3A3DAsMDHVQbgBBTZ4DdiQ4D1lS+IIMeeBC6HAE4QMSzU4TID5CAb8NjLAO4FSECENoYRgIif3nMRIj5u1gJbAC/Bz9Ee50cTYUuCkAIkNEUYSYJhBUhoiTCKBMMLQNR3+eddlC0BXO4DtCBxjj4jbt4WLkWSYJQNIYl6HF9ON/9uVwCJAvTomU+vn8NIoMkwQ8AaGBL2GVoAsM9wc4DR0M5iwywDt5h953CKZSBoY4oMQNSWBbz37FKQAag+mKMEf49pBCAqD+oswScKdh9AEtwH+GZaAWYh5KVQYAcEmBwIMDlFAmh+swboMfyzgYAPBJgcCDA5xQJgHhALt6+IAev0ur5mLgDu6d0m/xCEFaoviszJKzbinjuHW0EP/6LIxLKCyAJlWGQEtXcFE+F9wbVIvB3NxcuiEXgeHBG6CoDAy9IigokARL8lQPD1KBWhZa+G/VwAAq+P5vOOKl8NQ+B1WVtSt+7Uij4ZhMDbsMwInG16sQ9HIvj94AjAzgDHl/cDLo32g3tIJ3LCBwH6wRVAZCsYR8V9kGh3sbMAbQkinR9YlFWqvcWDpjEcRDhJtHzSSLKzhbsQ0uPMvASvYu4hLoD0UBD5GT4NUaXbVyUDSBXSY0/fQltMjXmW2hCgNSmM0vsTUhJrtafqHIBT6KipX6OMmiss9beEXc4nlzuFll8mLf1a6hray2uTVUBtJaL2/sRaWVuGAosNNrNlYGllogc/wS2z1e6q6T7A7FvGpVnAsp3MN4K2KjdK70+0lN26k3TZCbycT4dlRaOt+Vu5Vc+1NrGg61bwXoUj9/6Exl1+SbqfBVzOp8NoqX+PvL6950Uu3hZ+fHk/EG1fNI1M+nhFLnXvwCe6Z4CcJMKIvT+/vesl+ETOBCD6lsBTA0nisV4uhoA1UmN53EauxWPgE24FSOSNF0kGz0HPcS9AToSsECXwiVACJLxlhWhBzwkpQM6y8S2EiBzwJeEFWLIWHI4UIwUbAAAAAAAAAMD0/AcDae7hObAPmAAAAABJRU5ErkJggg==" alt="AutoTrack" />
         <span>AUTOTRACK</span>
       </div>
-      <h1>Sabe en qué se te va el tiempo,<br /><span class="accent">sin mover un dedo.</span></h1>
-      <p class="subtitle">
-        Extensión de Chrome que rastrea automáticamente cuánto tiempo pasas en cada
-        sitio web y te muestra tu productividad real — sin botones de inicio/pausa,
-        sin fricción.
-      </p>
+      <h1 id="hero-title"></h1>
+      <p class="subtitle" id="hero-subtitle"></p>
       <div class="cta-row">
-        <a class="cta-btn" href="#planes">Ver planes</a>
-        <a class="ghost-btn" href="mailto:fl.fabiola2023@gmail.com">Contacto</a>
+        <a class="cta-btn" href="#planes" id="cta-plans"></a>
+        <a class="ghost-btn" href="mailto:fl.fabiola2023@gmail.com" id="cta-contact"></a>
       </div>
     </div>
   </header>
 
   <section>
     <div class="wrap">
-      <h2>Qué hace</h2>
+      <h2 id="section-features"></h2>
       <div class="features">
         <div class="feature">
-          <h3>Rastreo automático</h3>
-          <p>Detecta la pestaña activa, si Chrome tiene el foco y si estás inactivo. Nunca tienes que darle start/stop.</p>
+          <h3 id="f1-title"></h3>
+          <p id="f1-desc"></p>
         </div>
         <div class="feature">
-          <h3>Cronología y Objetivos</h3>
-          <p>Revisa tu actividad hora por hora y define metas diarias o semanales por sitio o categoría.</p>
+          <h3 id="f2-title"></h3>
+          <p id="f2-desc"></p>
         </div>
         <div class="feature">
-          <h3>Análisis de productividad</h3>
-          <p>Categorías automáticas (trabajo, distracción, neutral), tendencias, y tus horas más productivas.</p>
+          <h3 id="f3-title"></h3>
+          <p id="f3-desc"></p>
         </div>
         <div class="feature">
-          <h3>Informe semanal</h3>
-          <p>Un resumen de tu semana vs. la anterior, listo para copiar o descargar.</p>
+          <h3 id="f4-title"></h3>
+          <p id="f4-desc"></p>
         </div>
         <div class="feature">
-          <h3>Alertas de tiempo</h3>
-          <p>Recibe un aviso cuando te acerques o superes el límite que definiste para un sitio o categoría.</p>
+          <h3 id="f5-title"></h3>
+          <p id="f5-desc"></p>
         </div>
         <div class="feature">
-          <h3>Español e inglés</h3>
-          <p>Toda la interfaz disponible en ambos idiomas, con opción de cambiarlo manualmente.</p>
+          <h3 id="f6-title"></h3>
+          <p id="f6-desc"></p>
         </div>
       </div>
     </div>
@@ -190,28 +215,28 @@
 
   <section id="planes">
     <div class="wrap">
-      <h2>Planes</h2>
+      <h2 id="section-plans"></h2>
       <div class="plans">
         <div class="plan">
-          <div class="plan-name">Free</div>
+          <div class="plan-name" id="plan-free-name"></div>
           <div class="plan-price">$0</div>
           <ul>
-            <li>Rastreo automático ilimitado</li>
-            <li>Historial de 7 días</li>
-            <li>Análisis básico</li>
-            <li>2 objetivos, 2 alertas</li>
-            <li>3 categorías personalizadas</li>
+            <li id="free-f1"></li>
+            <li id="free-f2"></li>
+            <li id="free-f3"></li>
+            <li id="free-f4"></li>
+            <li id="free-f5"></li>
           </ul>
         </div>
         <div class="plan pro">
-          <div class="plan-name">Pro</div>
-          <div class="plan-price">$3<span> / mes</span></div>
+          <div class="plan-name" id="plan-pro-name"></div>
+          <div class="plan-price">$3<span id="plan-pro-period"></span></div>
           <ul>
-            <li>Historial de 30 días</li>
-            <li>Objetivos, alertas y categorías ilimitadas</li>
-            <li>Análisis avanzado (tendencias, patrones)</li>
-            <li>Informe semanal + exportación</li>
-            <li>Exportación a CSV</li>
+            <li id="pro-f1"></li>
+            <li id="pro-f2"></li>
+            <li id="pro-f3"></li>
+            <li id="pro-f4"></li>
+            <li id="pro-f5"></li>
           </ul>
         </div>
       </div>
@@ -220,21 +245,111 @@
 
   <section>
     <div class="wrap privacy">
-      <h2>Privacidad</h2>
-      <p>
-        Todos tus datos de navegación se guardan localmente en tu navegador.
-        AutoTrack no envía el contenido de tus pestañas, contraseñas ni pulsaciones
-        de teclado a ningún servidor. Solo se registra el dominio visitado, el
-        tiempo y la categoría de productividad — lo necesario para tus estadísticas.
-      </p>
+      <h2 id="section-privacy"></h2>
+      <p id="privacy-text"></p>
     </div>
   </section>
 
-  <footer>
-    <div class="wrap">
-      AutoTrack · Contacto: <a href="mailto:fl.fabiola2023@gmail.com">fl.fabiola2023@gmail.com</a>
-    </div>
-  </footer>
+  <footer>AutoTrack</footer>
 
+  <script>
+    const STRINGS = {
+      es: {
+        "hero-title": 'Sabe en qué se te va el tiempo,<br /><span class="accent">sin mover un dedo.</span>',
+        "hero-subtitle": "Extensión de Chrome que rastrea automáticamente cuánto tiempo pasas en cada sitio web y te muestra tu productividad real — sin botones de inicio/pausa, sin fricción.",
+        "cta-plans": "Ver planes",
+        "cta-contact": "Contacto",
+        "section-features": "Qué hace",
+        "f1-title": "Rastreo automático",
+        "f1-desc": "Detecta la pestaña activa, si Chrome tiene el foco y si estás inactivo. Nunca tienes que darle start/stop.",
+        "f2-title": "Cronología y Objetivos",
+        "f2-desc": "Revisa tu actividad hora por hora y define metas diarias o semanales por sitio o categoría.",
+        "f3-title": "Análisis de productividad",
+        "f3-desc": "Categorías automáticas (trabajo, distracción, neutral), tendencias, y tus horas más productivas.",
+        "f4-title": "Informe semanal",
+        "f4-desc": "Un resumen de tu semana vs. la anterior, listo para copiar o descargar.",
+        "f5-title": "Alertas de tiempo",
+        "f5-desc": "Recibe un aviso cuando te acerques o superes el límite que definiste para un sitio o categoría.",
+        "f6-title": "Español e inglés",
+        "f6-desc": "Toda la interfaz disponible en ambos idiomas, con opción de cambiarlo manualmente.",
+        "section-plans": "Planes",
+        "plan-free-name": "Free",
+        "free-f1": "Rastreo automático ilimitado",
+        "free-f2": "Historial de 7 días",
+        "free-f3": "Análisis básico",
+        "free-f4": "2 objetivos, 2 alertas",
+        "free-f5": "3 categorías personalizadas",
+        "plan-pro-name": "Pro",
+        "plan-pro-period": " / mes",
+        "pro-f1": "Historial de 30 días",
+        "pro-f2": "Objetivos, alertas y categorías ilimitadas",
+        "pro-f3": "Análisis avanzado (tendencias, patrones)",
+        "pro-f4": "Informe semanal + exportación",
+        "pro-f5": "Exportación a CSV",
+        "section-privacy": "Privacidad",
+        "privacy-text": "Todos tus datos de navegación se guardan localmente en tu navegador. AutoTrack no envía el contenido de tus pestañas, contraseñas ni pulsaciones de teclado a ningún servidor. Solo se registra el dominio visitado, el tiempo y la categoría de productividad — lo necesario para tus estadísticas.",
+      },
+      en: {
+        "hero-title": 'Know where your time really goes,<br /><span class="accent">without lifting a finger.</span>',
+        "hero-subtitle": "A Chrome extension that automatically tracks how much time you spend on each website and shows your real productivity — no start/stop buttons, no friction.",
+        "cta-plans": "See plans",
+        "cta-contact": "Contact",
+        "section-features": "What it does",
+        "f1-title": "Automatic tracking",
+        "f1-desc": "Detects the active tab, whether Chrome is focused, and whether you're idle. You never have to hit start/stop.",
+        "f2-title": "Timeline & Goals",
+        "f2-desc": "Review your activity hour by hour and set daily or weekly goals per site or category.",
+        "f3-title": "Productivity insights",
+        "f3-desc": "Automatic categories (work, distracting, neutral), trends, and your most productive hours.",
+        "f4-title": "Weekly report",
+        "f4-desc": "A summary of your week vs. the previous one, ready to copy or download.",
+        "f5-title": "Time alerts",
+        "f5-desc": "Get notified when you're close to or over the limit you set for a site or category.",
+        "f6-title": "Spanish & English",
+        "f6-desc": "The whole interface is available in both languages, switchable anytime.",
+        "section-plans": "Plans",
+        "plan-free-name": "Free",
+        "free-f1": "Unlimited automatic tracking",
+        "free-f2": "7-day history",
+        "free-f3": "Basic insights",
+        "free-f4": "2 goals, 2 alerts",
+        "free-f5": "3 custom categories",
+        "plan-pro-name": "Pro",
+        "plan-pro-period": " / month",
+        "pro-f1": "30-day history",
+        "pro-f2": "Unlimited goals, alerts and categories",
+        "pro-f3": "Advanced insights (trends, patterns)",
+        "pro-f4": "Weekly report + export",
+        "pro-f5": "CSV export",
+        "section-privacy": "Privacy",
+        "privacy-text": "All your browsing data is stored locally in your browser. AutoTrack never sends tab contents, passwords, or keystrokes to any server. Only the visited domain, time spent, and productivity category are recorded — what's needed for your stats.",
+      },
+    };
+    const HTML_KEYS = new Set(["hero-title"]);
+
+    function applyLang(lang) {
+      const dict = STRINGS[lang];
+      for (const [id, value] of Object.entries(dict)) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (HTML_KEYS.has(id)) el.innerHTML = value;
+        else el.textContent = value;
+      }
+      document.documentElement.lang = lang;
+      document.getElementById("lang-es").classList.toggle("active", lang === "es");
+      document.getElementById("lang-en").classList.toggle("active", lang === "en");
+      localStorage.setItem("autotrack-landing-lang", lang);
+    }
+
+    document.getElementById("lang-es").addEventListener("click", () => applyLang("es"));
+    document.getElementById("lang-en").addEventListener("click", () => applyLang("en"));
+
+    function detectLang() {
+      const saved = localStorage.getItem("autotrack-landing-lang");
+      if (saved === "es" || saved === "en") return saved;
+      return (navigator.language || "es").toLowerCase().startsWith("en") ? "en" : "es";
+    }
+    applyLang(detectLang());
+  </script>
 </body>
 </html>
