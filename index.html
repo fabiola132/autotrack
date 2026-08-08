@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AutoTrack — Rastreador de tiempo automático para Chrome</title>
+<meta name="description" content="AutoTrack rastrea automáticamente cuánto tiempo pasas en cada sitio web, sin botones de inicio/pausa, y te muestra estadísticas de productividad. 100% local y privado." />
+<style>
+  :root {
+    --bg: #14161b;
+    --bg-row: #1c2028;
+    --card: #191c22;
+    --ink: #eef0f3;
+    --ink-dim: #8b93a1;
+    --amber: #e8a33d;
+    --amber-dim: #e8a33d55;
+    --productive: #6fcf7f;
+    --distracting: #e85d5d;
+    --sans: -apple-system, "Segoe UI", Inter, system-ui, sans-serif;
+    --mono: "SF Mono", "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+  }
+  a { color: var(--amber); }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  header.hero {
+    padding: 72px 0 56px;
+    text-align: center;
+    border-bottom: 1px solid #262a33;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .brand img { width: 40px; height: 40px; border-radius: 9px; }
+  .brand span {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.15;
+    margin: 0 0 18px;
+  }
+  h1 .accent { color: var(--amber); }
+  .subtitle {
+    color: var(--ink-dim);
+    font-size: 18px;
+    max-width: 560px;
+    margin: 0 auto 32px;
+  }
+  .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .cta-btn {
+    background: var(--amber);
+    color: #191c22;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 13px 26px;
+    border-radius: 9px;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .ghost-btn {
+    border: 1px solid #333947;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 13px 26px;
+    border-radius: 9px;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  section { padding: 64px 0; border-bottom: 1px solid #262a33; }
+  section:last-of-type { border-bottom: none; }
+  h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-dim);
+    margin: 0 0 28px;
+    text-align: center;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .feature {
+    background: var(--card);
+    border: 1px solid #262a33;
+    border-radius: 12px;
+    padding: 22px;
+  }
+  .feature h3 { margin: 0 0 8px; font-size: 15px; }
+  .feature p { margin: 0; color: var(--ink-dim); font-size: 13.5px; }
+
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .plan {
+    background: var(--card);
+    border: 1px solid #262a33;
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .plan.pro { border-color: var(--amber-dim); }
+  .plan-name { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-dim); }
+  .plan.pro .plan-name { color: var(--amber); }
+  .plan-price { font-size: 32px; font-weight: 700; margin: 8px 0 20px; }
+  .plan-price span { font-size: 14px; font-weight: 400; color: var(--ink-dim); }
+  .plan ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .plan li { font-size: 14px; color: var(--ink-dim); padding-left: 20px; position: relative; }
+  .plan li::before { content: "✓"; position: absolute; left: 0; color: var(--productive); }
+  .plan.pro li::before { color: var(--amber); }
+
+  .privacy { text-align: center; max-width: 640px; margin: 0 auto; }
+  .privacy p { color: var(--ink-dim); font-size: 15px; }
+
+  footer { padding: 40px 0; text-align: center; color: var(--ink-dim); font-size: 13px; }
+  footer a { color: var(--ink-dim); text-decoration: underline; }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="brand">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAFa0lEQVR4nO2dy00kMRCGa1YbxCA4kQEBEAqBEAGBbCgEQAZzGjRkMXtAlkzT0227Hq6y/0/awz602K7P5Wd3EwEAAAAAAAAAAGAWDr0LYMHdw+N17c8/3u5//P7p9fPXv7mcT0O30d/eBZDmVrAl/7+RpAgvgHTAW35mZCFCCtAj6Fvk5YkmQygBvAV+jVTGKCK4FyBC0NeIkhX+9C7ALe4eHq9Rg78k1eXr37O7+rgUwGNDcUlLzq9/z9f0q3ORiMjRELBskI+3+9V1+SgcX95dDAsuMsDdw+N15GAvN5yI/Axx3QXYaoS1hhuBXPbeEnQVYFn5EbNAicQ9JegiQE36Gy0L3JK815BgLsBeJUfKAi3yWktgKkBr5SJmgbUyl8ptKYGZADWVWmuoiBLk1GY2KwlMBGipTOShQEpWCwnUNyM4leCk0Z6UXDSpQfMsQTUDcA2OEOwlGkOVZiZQE0Cr0NHmAlISa7WnigCShY2UBbTl1JBAfGzRKGTEuYDmYZbknCCEAETjnw7W4FaA3gcbMyElgdgcAMG3Raq9RQRA8PsgcauILYCXq00z8fF2/+OKGef/Yo0jyx+OSZo+aysizvUyUQGIIIEWe3sMrRI0C7CXeiCCHFvBT+3cuipoFiBN/EoKB9rY6/XL9m2RgC0AUX1BwT4tHctMgNLn7XMgQRnczlQrgagARMgGHCQ6UHcBEsgG5Uh2GnUBanb9kA3KkTzxrJFA9UbQ0+vnzUog+NtYtU+VAK17/q2ViXb7h0Nqo61OU0pNnKqGAIlDn9JzfemLlbNROgyYPxmEbOCL4gxgeeSLyaMMJVnAnQA1PR0ibFMiQPf3A3DAsMDHVQbgBBTZ4DdiQ4D1lS+IIMeeBC6HAE4QMSzU4TID5CAb8NjLAO4FSECENoYRgIif3nMRIj5u1gJbAC/Bz9Ee50cTYUuCkAIkNEUYSYJhBUhoiTCKBMMLQNR3+eddlC0BXO4DtCBxjj4jbt4WLkWSYJQNIYl6HF9ON/9uVwCJAvTomU+vn8NIoMkwQ8AaGBL2GVoAsM9wc4DR0M5iwywDt5h953CKZSBoY4oMQNSWBbz37FKQAag+mKMEf49pBCAqD+oswScKdh9AEtwH+GZaAWYh5KVQYAcEmBwIMDlFAmh+swboMfyzgYAPBJgcCDA5xQJgHhALt6+IAev0ur5mLgDu6d0m/xCEFaoviszJKzbinjuHW0EP/6LIxLKCyAJlWGQEtXcFE+F9wbVIvB3NxcuiEXgeHBG6CoDAy9IigokARL8lQPD1KBWhZa+G/VwAAq+P5vOOKl8NQ+B1WVtSt+7Uij4ZhMDbsMwInG16sQ9HIvj94AjAzgDHl/cDLo32g3tIJ3LCBwH6wRVAZCsYR8V9kGh3sbMAbQkinR9YlFWqvcWDpjEcRDhJtHzSSLKzhbsQ0uPMvASvYu4hLoD0UBD5GT4NUaXbVyUDSBXSY0/fQltMjXmW2hCgNSmM0vsTUhJrtafqHIBT6KipX6OMmiss9beEXc4nlzuFll8mLf1a6hray2uTVUBtJaL2/sRaWVuGAosNNrNlYGllogc/wS2z1e6q6T7A7FvGpVnAsp3MN4K2KjdK70+0lN26k3TZCbycT4dlRaOt+Vu5Vc+1NrGg61bwXoUj9/6Exl1+SbqfBVzOp8NoqX+PvL6950Uu3hZ+fHk/EG1fNI1M+nhFLnXvwCe6Z4CcJMKIvT+/vesl+ETOBCD6lsBTA0nisV4uhoA1UmN53EauxWPgE24FSOSNF0kGz0HPcS9AToSsECXwiVACJLxlhWhBzwkpQM6y8S2EiBzwJeEFWLIWHI4UIwUbAAAAAAAAAMD0/AcDae7hObAPmAAAAABJRU5ErkJggg==" alt="AutoTrack" />
+        <span>AUTOTRACK</span>
+      </div>
+      <h1>Sabe en qué se te va el tiempo,<br /><span class="accent">sin mover un dedo.</span></h1>
+      <p class="subtitle">
+        Extensión de Chrome que rastrea automáticamente cuánto tiempo pasas en cada
+        sitio web y te muestra tu productividad real — sin botones de inicio/pausa,
+        sin fricción.
+      </p>
+      <div class="cta-row">
+        <a class="cta-btn" href="#planes">Ver planes</a>
+        <a class="ghost-btn" href="mailto:fl.fabiola2023@gmail.com">Contacto</a>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <h2>Qué hace</h2>
+      <div class="features">
+        <div class="feature">
+          <h3>Rastreo automático</h3>
+          <p>Detecta la pestaña activa, si Chrome tiene el foco y si estás inactivo. Nunca tienes que darle start/stop.</p>
+        </div>
+        <div class="feature">
+          <h3>Cronología y Objetivos</h3>
+          <p>Revisa tu actividad hora por hora y define metas diarias o semanales por sitio o categoría.</p>
+        </div>
+        <div class="feature">
+          <h3>Análisis de productividad</h3>
+          <p>Categorías automáticas (trabajo, distracción, neutral), tendencias, y tus horas más productivas.</p>
+        </div>
+        <div class="feature">
+          <h3>Informe semanal</h3>
+          <p>Un resumen de tu semana vs. la anterior, listo para copiar o descargar.</p>
+        </div>
+        <div class="feature">
+          <h3>Alertas de tiempo</h3>
+          <p>Recibe un aviso cuando te acerques o superes el límite que definiste para un sitio o categoría.</p>
+        </div>
+        <div class="feature">
+          <h3>Español e inglés</h3>
+          <p>Toda la interfaz disponible en ambos idiomas, con opción de cambiarlo manualmente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="planes">
+    <div class="wrap">
+      <h2>Planes</h2>
+      <div class="plans">
+        <div class="plan">
+          <div class="plan-name">Free</div>
+          <div class="plan-price">$0</div>
+          <ul>
+            <li>Rastreo automático ilimitado</li>
+            <li>Historial de 7 días</li>
+            <li>Análisis básico</li>
+            <li>2 objetivos, 2 alertas</li>
+            <li>3 categorías personalizadas</li>
+          </ul>
+        </div>
+        <div class="plan pro">
+          <div class="plan-name">Pro</div>
+          <div class="plan-price">$3<span> / mes</span></div>
+          <ul>
+            <li>Historial de 30 días</li>
+            <li>Objetivos, alertas y categorías ilimitadas</li>
+            <li>Análisis avanzado (tendencias, patrones)</li>
+            <li>Informe semanal + exportación</li>
+            <li>Exportación a CSV</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap privacy">
+      <h2>Privacidad</h2>
+      <p>
+        Todos tus datos de navegación se guardan localmente en tu navegador.
+        AutoTrack no envía el contenido de tus pestañas, contraseñas ni pulsaciones
+        de teclado a ningún servidor. Solo se registra el dominio visitado, el
+        tiempo y la categoría de productividad — lo necesario para tus estadísticas.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      AutoTrack · Contacto: <a href="mailto:fl.fabiola2023@gmail.com">fl.fabiola2023@gmail.com</a>
+    </div>
+  </footer>
+
+</body>
+</html>
