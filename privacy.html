@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AutoTrack — Privacy Policy / Política de Privacidad</title>
+<meta name="description" content="AutoTrack privacy policy: what data is collected, where it's stored, and which third-party services are used." />
+<style>
+  :root {
+    --bg: #14161b;
+    --card: #191c22;
+    --ink: #eef0f3;
+    --ink-dim: #8b93a1;
+    --amber: #e8a33d;
+    --amber-dim: #e8a33d55;
+    --sans: -apple-system, "Segoe UI", Inter, system-ui, sans-serif;
+    --mono: "SF Mono", "Roboto Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.6;
+  }
+  a { color: var(--amber); }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 64px 24px 80px; }
+
+  .lang-switch {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    gap: 4px;
+    background: var(--card);
+    border: 1px solid #262a33;
+    border-radius: 8px;
+    padding: 3px;
+    z-index: 10;
+  }
+  .lang-switch button {
+    background: transparent;
+    border: none;
+    color: var(--ink-dim);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .lang-switch button.active { background: var(--amber); color: #191c22; }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .brand img { width: 28px; height: 28px; border-radius: 7px; }
+  .brand span { font-weight: 700; letter-spacing: 0.02em; }
+
+  h1 { font-size: 28px; margin: 24px 0 4px; }
+  .updated { color: var(--ink-dim); font-size: 13px; margin: 0 0 40px; }
+
+  h2 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--amber);
+    margin: 36px 0 12px;
+  }
+  p, li { color: var(--ink-dim); font-size: 15px; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--ink); }
+  .back { display: inline-block; margin-bottom: 24px; font-size: 13px; }
+</style>
+</head>
+<body>
+  <div class="lang-switch">
+    <button type="button" id="lang-es" data-lang="es">ES</button>
+    <button type="button" id="lang-en" data-lang="en">EN</button>
+  </div>
+
+  <div class="wrap">
+    <a class="back" href="./">← AutoTrack</a>
+    <div class="brand">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAFa0lEQVR4nO2dy00kMRCGa1YbxCA4kQEBEAqBEAGBbCgEQAZzGjRkMXtAlkzT0227Hq6y/0/awz602K7P5Wd3EwEAAAAAAAAAAGAWDr0LYMHdw+N17c8/3u5//P7p9fPXv7mcT0O30d/eBZDmVrAl/7+RpAgvgHTAW35mZCFCCtAj6Fvk5YkmQygBvAV+jVTGKCK4FyBC0NeIkhX+9C7ALe4eHq9Rg78k1eXr37O7+rgUwGNDcUlLzq9/z9f0q3ORiMjRELBskI+3+9V1+SgcX95dDAsuMsDdw+N15GAvN5yI/Axx3QXYaoS1hhuBXPbeEnQVYFn5EbNAicQ9JegiQE36Gy0L3JK815BgLsBeJUfKAi3yWktgKkBr5SJmgbUyl8ptKYGZADWVWmuoiBLk1GY2KwlMBGipTOShQEpWCwnUNyM4leCk0Z6UXDSpQfMsQTUDcA2OEOwlGkOVZiZQE0Cr0NHmAlISa7WnigCShY2UBbTl1JBAfGzRKGTEuYDmYZbknCCEAETjnw7W4FaA3gcbMyElgdgcAMG3Raq9RQRA8PsgcauILYCXq00z8fF2/+OKGef/Yo0jyx+OSZo+aysizvUyUQGIIIEWe3sMrRI0C7CXeiCCHFvBT+3cuipoFiBN/EoKB9rY6/XL9m2RgC0AUX1BwT4tHctMgNLn7XMgQRnczlQrgagARMgGHCQ6UHcBEsgG5Uh2GnUBanb9kA3KkTzxrJFA9UbQ0+vnzUog+NtYtU+VAK17/q2ViXb7h0Nqo61OU0pNnKqGAIlDn9JzfemLlbNROgyYPxmEbOCL4gxgeeSLyaMMJVnAnQA1PR0ibFMiQPf3A3DAsMDHVQbgBBTZ4DdiQ4D1lS+IIMeeBC6HAE4QMSzU4TID5CAb8NjLAO4FSECENoYRgIif3nMRIj5u1gJbAC/Bz9Ee50cTYUuCkAIkNEUYSYJhBUhoiTCKBMMLQNR3+eddlC0BXO4DtCBxjj4jbt4WLkWSYJQNIYl6HF9ON/9uVwCJAvTomU+vn8NIoMkwQ8AaGBL2GVoAsM9wc4DR0M5iwywDt5h953CKZSBoY4oMQNSWBbz37FKQAag+mKMEf49pBCAqD+oswScKdh9AEtwH+GZaAWYh5KVQYAcEmBwIMDlFAmh+swboMfyzgYAPBJgcCDA5xQJgHhALt6+IAev0ur5mLgDu6d0m/xCEFaoviszJKzbinjuHW0EP/6LIxLKCyAJlWGQEtXcFE+F9wbVIvB3NxcuiEXgeHBG6CoDAy9IigokARL8lQPD1KBWhZa+G/VwAAq+P5vOOKl8NQ+B1WVtSt+7Uij4ZhMDbsMwInG16sQ9HIvj94AjAzgDHl/cDLo32g3tIJ3LCBwH6wRVAZCsYR8V9kGh3sbMAbQkinR9YlFWqvcWDpjEcRDhJtHzSSLKzhbsQ0uPMvASvYu4hLoD0UBD5GT4NUaXbVyUDSBXSY0/fQltMjXmW2hCgNSmM0vsTUhJrtafqHIBT6KipX6OMmiss9beEXc4nlzuFll8mLf1a6hray2uTVUBtJaL2/sRaWVuGAosNNrNlYGllogc/wS2z1e6q6T7A7FvGpVnAsp3MN4K2KjdK70+0lN26k3TZCbycT4dlRaOt+Vu5Vc+1NrGg61bwXoUj9/6Exl1+SbqfBVzOp8NoqX+PvL6950Uu3hZ+fHk/EG1fNI1M+nhFLnXvwCe6Z4CcJMKIvT+/vesl+ETOBCD6lsBTA0nisV4uhoA1UmN53EauxWPgE24FSOSNF0kGz0HPcS9AToSsECXwiVACJLxlhWhBzwkpQM6y8S2EiBzwJeEFWLIWHI4UIwUbAAAAAAAAAMD0/AcDae7hObAPmAAAAABJRU5ErkJggg==" alt="" />
+      <span>AUTOTRACK</span>
+    </div>
+
+    <h1 id="pp-title"></h1>
+    <p class="updated" id="pp-updated"></p>
+
+    <p id="pp-intro"></p>
+
+    <h2 id="h-collect"></h2>
+    <p id="p-collect-intro"></p>
+    <ul>
+      <li id="li-collect-1"></li>
+      <li id="li-collect-2"></li>
+      <li id="li-collect-3"></li>
+      <li id="li-collect-4"></li>
+    </ul>
+
+    <h2 id="h-notcollect"></h2>
+    <ul>
+      <li id="li-not-1"></li>
+      <li id="li-not-2"></li>
+      <li id="li-not-3"></li>
+      <li id="li-not-4"></li>
+    </ul>
+
+    <h2 id="h-storage"></h2>
+    <p id="p-storage"></p>
+
+    <h2 id="h-third-party"></h2>
+    <p id="p-google"></p>
+    <p id="p-lemonsqueezy"></p>
+
+    <h2 id="h-permissions"></h2>
+    <ul>
+      <li id="li-perm-storage"></li>
+      <li id="li-perm-tabs"></li>
+      <li id="li-perm-alarms"></li>
+      <li id="li-perm-idle"></li>
+      <li id="li-perm-notifications"></li>
+      <li id="li-perm-identity"></li>
+      <li id="li-perm-host"></li>
+    </ul>
+
+    <h2 id="h-sharing"></h2>
+    <p id="p-sharing"></p>
+
+    <h2 id="h-delete"></h2>
+    <p id="p-delete"></p>
+
+    <h2 id="h-children"></h2>
+    <p id="p-children"></p>
+
+    <h2 id="h-changes"></h2>
+    <p id="p-changes"></p>
+
+    <h2 id="h-contact"></h2>
+    <p id="p-contact"></p>
+  </div>
+
+  <script>
+    const STRINGS = {
+      es: {
+        "pp-title": "Política de Privacidad",
+        "pp-updated": "Última actualización: agosto de 2026",
+        "pp-intro": "AutoTrack es una extensión de Chrome para rastrear el tiempo que pasas en cada sitio web. Esta política explica qué información se recopila, dónde se guarda y con quién se comparte.",
+        "h-collect": "Qué información se recopila",
+        "p-collect-intro": "Mientras usas Chrome con la extensión activa, AutoTrack puede registrar:",
+        "li-collect-1": "El dominio de los sitios web que visitas (ej. \"github.com\"), no la URL completa ni el contenido de la página.",
+        "li-collect-2": "El tiempo que pasas en cada dominio.",
+        "li-collect-3": "La categoría de productividad asignada a ese dominio (trabajo, entretenimiento, etc.), incluida cualquier reclasificación manual que hagas.",
+        "li-collect-4": "Marcas de tiempo necesarias para generar tus estadísticas (por hora, por día).",
+        "h-notcollect": "Qué NO se recopila",
+        "li-not-1": "Contraseñas.",
+        "li-not-2": "Contenido de formularios que llenas en otros sitios.",
+        "li-not-3": "El contenido de las páginas que visitas.",
+        "li-not-4": "Pulsaciones de teclado.",
+        "h-storage": "Dónde se guarda tu información",
+        "p-storage": "Todos los datos descritos arriba se guardan localmente en tu navegador, usando el almacenamiento propio de la extensión (chrome.storage.local). AutoTrack no tiene servidor propio y no envía estos datos a ningún lugar — viven únicamente en tu computadora, salvo las dos excepciones puntuales descritas en \"Servicios de terceros\" abajo.",
+        "h-third-party": "Servicios de terceros",
+        "p-google": "Inicio de sesión con Google (opcional): si eliges \"Continuar con Google\", AutoTrack usa la API de identidad de Chrome para obtener tu nombre, correo y foto de perfil, únicamente para mostrarlos en la sección Cuenta. Esta información no se usa para rastrear tu actividad ni se sincroniza con ningún otro dispositivo.",
+        "p-lemonsqueezy": "Lemon Squeezy (pagos y licencias): la compra de AutoTrack Pro se procesa completamente en el sitio de Lemon Squeezy — AutoTrack nunca ve ni maneja los datos de tu tarjeta. Al activar tu suscripción, la extensión envía tu license key a la API de licencias de Lemon Squeezy para verificar que es válida; Lemon Squeezy tiene su propia política de privacidad, disponible en su sitio.",
+        "h-permissions": "Por qué se piden ciertos permisos",
+        "li-perm-storage": "storage — para guardar tus datos localmente en el navegador.",
+        "li-perm-tabs": "tabs — para saber qué pestaña está activa y abrir el checkout de pago o el portal de facturación en una pestaña nueva.",
+        "li-perm-alarms": "alarms — para las tareas periódicas internas de la extensión (ej. guardar el progreso cada cierto tiempo).",
+        "li-perm-idle": "idle — para pausar el conteo cuando no estás usando la computadora.",
+        "li-perm-notifications": "notifications — para mostrarte las alertas de tiempo que configuraste.",
+        "li-perm-identity": "identity — para el inicio de sesión opcional con Google.",
+        "li-perm-host": "acceso a api.lemonsqueezy.com — para verificar tu license key de Pro.",
+        "h-sharing": "Venta o intercambio de datos",
+        "p-sharing": "AutoTrack no vende, alquila ni comparte tu información con terceros con fines publicitarios ni de ningún otro tipo.",
+        "h-delete": "Cómo eliminar tus datos",
+        "p-delete": "Puedes borrar todo tu historial rastreado en cualquier momento desde Configuración → Datos y exportación → Eliminar todos los datos. Desinstalar la extensión también elimina toda la información guardada localmente.",
+        "h-children": "Privacidad de menores",
+        "p-children": "AutoTrack no está dirigida a menores de 13 años y no recopila información a sabiendas de niños.",
+        "h-changes": "Cambios a esta política",
+        "p-changes": "Si esta política cambia, se actualizará esta misma página con una nueva fecha de \"última actualización\".",
+        "h-contact": "Contacto",
+        "p-contact": "¿Preguntas sobre esta política? Escribe a fl.fabiola2023@gmail.com.",
+      },
+      en: {
+        "pp-title": "Privacy Policy",
+        "pp-updated": "Last updated: August 2026",
+        "pp-intro": "AutoTrack is a Chrome extension that tracks how much time you spend on each website. This policy explains what information is collected, where it's stored, and who it's shared with.",
+        "h-collect": "What information is collected",
+        "p-collect-intro": "While you use Chrome with the extension active, AutoTrack may record:",
+        "li-collect-1": "The domain of the websites you visit (e.g. \"github.com\"), not the full URL or page content.",
+        "li-collect-2": "The time spent on each domain.",
+        "li-collect-3": "The productivity category assigned to that domain (work, entertainment, etc.), including any manual reclassification you make.",
+        "li-collect-4": "Timestamps needed to generate your statistics (hourly, daily).",
+        "h-notcollect": "What is NOT collected",
+        "li-not-1": "Passwords.",
+        "li-not-2": "The contents of forms you fill out on other sites.",
+        "li-not-3": "The content of the pages you visit.",
+        "li-not-4": "Keystrokes.",
+        "h-storage": "Where your information is stored",
+        "p-storage": "All the data described above is stored locally in your browser, using the extension's own storage (chrome.storage.local). AutoTrack has no server of its own and does not send this data anywhere — it lives only on your computer, except for the two specific cases described under \"Third-party services\" below.",
+        "h-third-party": "Third-party services",
+        "p-google": "Google sign-in (optional): if you choose \"Continue with Google\", AutoTrack uses Chrome's identity API to fetch your name, email, and profile photo, solely to display them in the Account section. This information is not used to track your activity and is not synced to any other device.",
+        "p-lemonsqueezy": "Lemon Squeezy (payments and licensing): purchasing AutoTrack Pro is processed entirely on Lemon Squeezy's site — AutoTrack never sees or handles your card details. When you activate your subscription, the extension sends your license key to Lemon Squeezy's License API to verify it's valid; Lemon Squeezy has its own privacy policy, available on their site.",
+        "h-permissions": "Why certain permissions are requested",
+        "li-perm-storage": "storage — to save your data locally in the browser.",
+        "li-perm-tabs": "tabs — to know which tab is active, and to open the payment checkout or billing portal in a new tab.",
+        "li-perm-alarms": "alarms — for the extension's internal periodic tasks (e.g. saving progress at intervals).",
+        "li-perm-idle": "idle — to pause tracking when you're not using the computer.",
+        "li-perm-notifications": "notifications — to show you the time alerts you configured.",
+        "li-perm-identity": "identity — for the optional Google sign-in.",
+        "li-perm-host": "access to api.lemonsqueezy.com — to verify your Pro license key.",
+        "h-sharing": "Selling or sharing data",
+        "p-sharing": "AutoTrack does not sell, rent, or share your information with third parties for advertising or any other purpose.",
+        "h-delete": "How to delete your data",
+        "p-delete": "You can delete all your tracked history at any time from Settings → Data & Export → Delete all data. Uninstalling the extension also removes all locally stored information.",
+        "h-children": "Children's privacy",
+        "p-children": "AutoTrack is not directed at children under 13 and does not knowingly collect information from children.",
+        "h-changes": "Changes to this policy",
+        "p-changes": "If this policy changes, this same page will be updated with a new \"last updated\" date.",
+        "h-contact": "Contact",
+        "p-contact": "Questions about this policy? Email fl.fabiola2023@gmail.com.",
+      },
+    };
+
+    function applyLang(lang) {
+      const dict = STRINGS[lang];
+      for (const [id, value] of Object.entries(dict)) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      }
+      document.documentElement.lang = lang;
+      document.getElementById("lang-es").classList.toggle("active", lang === "es");
+      document.getElementById("lang-en").classList.toggle("active", lang === "en");
+      localStorage.setItem("autotrack-landing-lang", lang);
+    }
+
+    document.getElementById("lang-es").addEventListener("click", () => applyLang("es"));
+    document.getElementById("lang-en").addEventListener("click", () => applyLang("en"));
+
+    function detectLang() {
+      const saved = localStorage.getItem("autotrack-landing-lang");
+      if (saved === "es" || saved === "en") return saved;
+      return (navigator.language || "es").toLowerCase().startsWith("en") ? "en" : "es";
+    }
+    applyLang(detectLang());
+  </script>
+</body>
+</html>
